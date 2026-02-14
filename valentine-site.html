@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>For Fatima — Something Special 💘</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Poppins, sans-serif;
+      background: linear-gradient(135deg, #f5e6d3, #e8d8c3, #d9c2ad);
+      color: #3a2f26;
+      overflow-x: hidden;
+    }
+
+    /* floating hearts layer */
+
+    #hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp linear forwards;
+      opacity: .7;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh) scale(.8);
+      }
+
+      to {
+        transform: translateY(-10vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    /* sparkle cursor */
+
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 14px;
+      animation: spark .8s linear forwards;
+      z-index: 999;
+    }
+
+    @keyframes spark {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      to {
+        opacity: 0;
+        transform: scale(.3) translateY(-20px);
+      }
+    }
+
+    /* sections */
+
+    .section {
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all .7s ease;
+      position: relative;
+      z-index: 5;
+    }
+
+    .section.show {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* titles */
+
+    h1 {
+      font-family: "Great Vibes", cursive;
+      font-size: 54px;
+      margin: 0 0 10px;
+      text-align: center;
+    }
+
+    p {
+      max-width: 700px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* loader */
+
+    #heart {
+      font-size: 80px;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.25)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    /* photos */
+
+    .photoRow {
+      display: flex;
+      gap: 28px;
+      margin: 30px 0;
+      align-items: center;
+      max-width: 900px;
+    }
+
+    .photoRow:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .photoRow img {
+      width: 240px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+    }
+
+    /* metallic buttons */
+
+    button {
+      padding: 16px 34px;
+      font-size: 18px;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      margin: 14px;
+      background: linear-gradient(145deg, #f8f1e7, #d8c2ad);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, .18),
+        inset 0 2px 3px rgba(255, 255, 255, .9),
+        inset 0 -3px 6px rgba(0, 0, 0, .18);
+      transition: .25s;
+    }
+
+    button:hover {
+      transform: translateY(-3px) scale(1.06);
+    }
+
+    #yesBtn {
+      font-weight: 700;
+      animation: yesPulse .9s infinite alternate;
+    }
+
+    @keyframes yesPulse {
+      from {
+        filter: drop-shadow(0 0 6px rgba(255, 180, 140, .4))
+      }
+
+      to {
+        filter: drop-shadow(0 0 20px rgba(255, 180, 140, .9))
+      }
+    }
+
+    /* audio player */
+
+    .lovePlayer {
+      background: linear-gradient(145deg, #fff8ef, #e7d6c4);
+      padding: 34px 46px;
+      border-radius: 26px;
+      box-shadow:
+        0 22px 44px rgba(0, 0, 0, .18),
+        inset 0 2px 4px rgba(255, 255, 255, .9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .playHeart {
+      font-size: 34px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+    }
+
+    .loveBar {
+      width: 240px;
+      height: 12px;
+      background: #e7d7c6;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .loveProgress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c9a98f, #f1d8c2);
+    }
+
+    /* certificate */
+
+    .certCard {
+      max-width: 520px;
+      border-radius: 22px;
+      overflow: hidden;
+      cursor: pointer;
+      background: linear-gradient(145deg, #fff8ef, #e7d6c4);
+      padding: 14px;
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, .18),
+        inset 0 2px 4px rgba(255, 255, 255, .9);
+      transition: .3s;
+    }
+
+    .certCard:hover {
+      transform: scale(1.04);
+    }
+
+    .certCard img {
+      width: 100%;
+      border-radius: 14px;
+    }
+
+    /* mobile */
+
+    @media(max-width:700px) {
+      .photoRow {
+        flex-direction: column !important;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="hearts"></div>
+
+  <!-- Loading -->
+  <div id="loading" class="section show">
+    <div id="heart">❤️</div>
+    <h1>Cooking Shawarma and buying pudding</h1>
+  </div>
+
+  <div id="msg1" class="section">
+    <h1>Hello Ya Hayati</h1>
+    <p>I didn’t want to ask this in an ordinary way.</p>
+    <button onclick="go('msg2')">Keep listening</button>
+  </div>
+
+  <div id="msg2" class="section">
+    <h1>So hold on your breath</h1>
+    <p>This was made slowly, intentionally, and exclusively for you</p>
+    <button onclick="go('photos')">Go onnnn~</button>
+  </div>
+
+  <div id="photos" class="section">
+    <h1>I know I say it alot. But I love you</h1>
+
+    <div class="photoRow">
+      <img src="image1.png">
+      <p>I feel things with you I never have with anyone else... Thought of our future...</p>
+    </div>
+
+    <div class="photoRow">
+      <img src="image2.png">
+      <p>You are an amazing phenomenon that I personally am proud of and Envy</p>
+    </div>
+
+    <div class="photoRow">
+      <img src="image3.png">
+      <p>I keep everything of you. Because I'm scared of losing you</p>
+    </div>
+
+    <div class="photoRow">
+      <img src="image4.png">
+      <p>You matter more than you think to me... Everything about you matters infinitely more than you think to me</p>
+    </div>
+
+    <button onclick="go('audioPage')">Continue</button>
+  </div>
+
+  <div id="audioPage" class="section">
+    <h1>Here's a little thing from me</h1>
+
+    <div class="lovePlayer">
+      <button class="playHeart" id="playBtn" onclick="toggleAudio()">❤</button>
+      <div class="loveBar">
+        <div class="loveProgress" id="progress"></div>
+      </div>
+      <p>Tap the heart</p>
+    </div>
+
+    <audio id="audio" preload="auto">
+      <source src="message.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="go('ask')">For the Moment of Truth...</button>
+  </div>
+
+  <div id="ask" class="section">
+    <h1>Will you be my Valentine?</h1>
+    <button id="yesBtn" onclick="yesClick()">Yes 💘</button>
+    <button id="noBtn" onclick="moveNo()">No</button>
+  </div>
+
+  <div id="final" class="section">
+    <h1>Officially sealed 💍</h1>
+    <p>Documented proof of our eternal love below.</p>
+
+    <div class="certCard" onclick="openCert()">
+      <img src="certificate.png">
+    </div>
+
+    <p>Best decision ever recorded ✨</p>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+
+    /* page switching */
+
+    function go(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
+      document.getElementById(id).classList.add('show');
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    setTimeout(() => go('msg1'), 2500);
+
+    /* floating hearts */
+    const hearts = document.getElementById("hearts");
+
+    setInterval(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "❤";
+      h.style.left = Math.random() * 100 + "%";
+      h.style.animationDuration = (4 + Math.random() * 4) + "s";
+      hearts.appendChild(h);
+      setTimeout(() => h.remove(), 8000);
+    }, 600);
+
+    /* sparkle cursor */
+
+    document.addEventListener("mousemove", e => {
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.innerHTML = "✨";
+      s.style.left = e.clientX + "px";
+      s.style.top = e.clientY + "px";
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 800);
+    });
+
+    /* background music */
+
+    const bgMusic = document.getElementById("bgMusic");
+    bgMusic.volume = .25;
+    let musicStarted = false;
+
+    document.addEventListener("click", () => {
+      if (!musicStarted) {
+        bgMusic.play().catch(() => { });
+        musicStarted = true;
+      }
+    });
+
+    /* yes/no */
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    let scale = 1;
+
+    function moveNo() {
+      const x = (Math.random() * 400) - 200;
+      const y = (Math.random() * 200) - 100;
+      noBtn.style.transform = `translate(${x}px,${y}px)`;
+      scale *= 1.35;
+      yesBtn.style.transform = `scale(${scale})`;
+      if (scale > 12) noBtn.style.display = "none";
+    }
+
+    function yesClick() { go('final'); }
+
+    /* audio — fixed only */
+
+    const audio = document.getElementById("audio");
+    const playBtn = document.getElementById("playBtn");
+    const prog = document.getElementById("progress");
+
+    audio.load();
+
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play().then(() => {
+          playBtn.innerHTML = "❚❚";
+          bgMusic.volume = .08;
+        }).catch(err => {
+          console.log("Audio play blocked:", err);
+        });
+      } else {
+        audio.pause();
+        playBtn.innerHTML = "❤";
+        bgMusic.volume = .25;
+      }
+    }
+
+    audio.addEventListener("timeupdate", () => {
+      if (!audio.duration || isNaN(audio.duration)) return;
+      prog.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+    });
+
+    audio.addEventListener("ended", () => {
+      playBtn.innerHTML = "❤";
+      prog.style.width = "0%";
+      bgMusic.volume = .25;
+    });
+
+    /* certificate */
+
+    function openCert() {
+      window.open("certificate.png", "_blank");
+    }
+
+  </script>
+
+</body>
+
+</html>
